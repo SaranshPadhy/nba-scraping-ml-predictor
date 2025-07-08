@@ -105,6 +105,7 @@ def process_box_scores():
 
 if __name__ == "__main__":
     games_df = process_box_scores()
+    games_df.to_csv("nba_games.csv")
     if not games_df.empty:
         print("Data processing complete. DataFrame shape:", games_df.shape)
     else:
