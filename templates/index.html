@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NBA 2025–2026 Predictions</title>
+  <style>
+    body { font-family: Arial; margin: 2rem; }
+    table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+    th { background-color: #eee; }
+    td.bold { font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Predicted 2025–2026 NBA Games</h1>
+  {% if games %}
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Home Team</th>
+          <th>Away Team</th>
+          <th>Predicted Winner</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in games %}
+        <tr>
+          <td>{{ game.date }}</td>
+          <td>{{ game.home_team }}</td>
+          <td>{{ game.away_team }}</td>
+          <td class="bold">{{ game.predicted_winner }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No predictions available yet.</p>
+  {% endif %}
+</body>
+</html>
