@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from bs4 import BeautifulSoup
 
-SCORE_DIR = "data/scores"
+SCORE_DIR = "past/data/scores"
 
 def parse_html(box_score_path):
     with open(box_score_path, encoding='utf-8') as f:
@@ -105,7 +105,7 @@ def process_box_scores():
 
 if __name__ == "__main__":
     games_df = process_box_scores()
-    games_df.to_csv("nba_games.csv")
+    games_df.to_csv("past_nba_games.csv")
     if not games_df.empty:
         print("Data processing complete. DataFrame shape:", games_df.shape)
     else:
