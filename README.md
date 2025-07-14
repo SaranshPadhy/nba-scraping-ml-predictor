@@ -44,7 +44,7 @@ NBA ML Game Predictor/
    # And install Playwright browsers:
    playwright install
    ```
-3. **Scrape and parse data:**
+3. **Scrape and parse data: (optional, data already included in repo, can skip this step)**
    ```sh
    python get_data.py
    python parse_data.py
@@ -66,7 +66,7 @@ NBA ML Game Predictor/
   - **Past NBA Game Predictions:** Past predictions, actual results, and correctness (✔️/❌)
 
 ## Notes
-- The project uses a mock schedule for future games. Replace `future/mock_schedule.csv` with real schedules when it comes out.
+- The project uses a mock schedule for future games. Replace `future/mock_schedule.csv` with the real schedule when it comes out.
 - All data is local; no API keys required.
 - Data scraping will take several hours due to basketball-reference's rate-limiting.
 - For large datasets, initial data parsing runs may take several minutes.
