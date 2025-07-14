@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 from sklearn.model_selection import TimeSeriesSplit
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.feature_selection import SequentialFeatureSelector
@@ -83,4 +84,21 @@ full = full.dropna(subset=features2 + ["target"]).reset_index(drop=True)
 sfs2 = SequentialFeatureSelector(rr, n_features_to_select=30, direction="forward", cv=split)
 sfs2.fit(full[features2], full["target"])
 preds2 = backtest(full, rr, list(pd.Index(features2)[sfs2.get_support()]))
+
 print(f"Second-stage accuracy: {accuracy_score(preds2['actual'], preds2['prediction'])}")
+
+
+past_pred_df = full.loc[preds2.index, ["date", "home", "team", "team_opp"]].copy()
+past_pred_df["predicted_winner"] = full.loc[preds2.index].assign(pred=preds2["prediction"]).apply(
+    lambda row: row["team"] if row["pred"] == 1 else row["team_opp"], axis=1)
+past_pred_df["actual_winner"] = full.loc[preds2.index].apply(
+    lambda row: row["team"] if row["target"] == 1 else row["team_opp"], axis=1)
+past_pred_df["home_team"] = past_pred_df.apply(lambda row: row["team"] if row["home"] == 1 else row["team_opp"], axis=1)
+past_pred_df["away_team"] = past_pred_df.apply(lambda row: row["team_opp"] if row["home"] == 1 else row["team"], axis=1)
+past_pred_df["predicted_correctly"] = past_pred_df["predicted_winner"] == past_pred_df["actual_winner"]
+past_pred_df = past_pred_df[["date", "home_team", "away_team", "predicted_winner", "actual_winner", "predicted_correctly"]]
+past_pred_df["date"] = pd.to_datetime(past_pred_df["date"]).dt.strftime("%Y-%m-%d")
+
+os.makedirs("static", exist_ok=True)
+past_pred_df.to_csv("static/past_predictions.csv", index=False)
+print("Past predictions saved to static/past_predictions.csv")

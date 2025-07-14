@@ -35,7 +35,37 @@
       </tbody>
     </table>
   {% else %}
-    <p>No predictions available yet.</p>
+    <p>No future predictions available yet.</p>
+  {% endif %}
+
+  <h1>Past NBA Game Predictions</h1>
+  {% if past_games %}
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Home Team</th>
+          <th>Away Team</th>
+          <th>Predicted Winner</th>
+          <th>Actual Winner</th>
+          <th>Predicted Correctly?</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in past_games %}
+        <tr>
+          <td>{{ game.date }}</td>
+          <td>{{ game.home_team }}</td>
+          <td>{{ game.away_team }}</td>
+          <td class="bold">{{ game.predicted_winner }}</td>
+          <td>{{ game.actual_winner }}</td>
+          <td>{% if game.predicted_correctly in [true, 'True', 1, '1'] %}✔️{% else %}❌{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No past predictions available yet.</p>
   {% endif %}
 </body>
 </html>
