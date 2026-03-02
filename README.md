@@ -35,7 +35,7 @@ NBA ML Game Predictor/
 ## Setup
 1. **Clone the repo:**
    ```sh
-   git clone <your-repo-url>
+   git clone <https://github.com/SaranshPadhy/nba-scraping-ml-predictor.git>
    cd NBA-ML-Game-Predictor
    ```
 2. **Install dependencies:**
